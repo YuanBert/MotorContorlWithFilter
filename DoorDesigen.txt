@@ -1,0 +1,70 @@
+1.逻辑设计
+	定时器中断（1ms）：
+	在定时器中断进行光电管限位器的状态，读取水平限位器和垂直限位器的状态。
+	
+	引脚命名：
+	---------------------------------------------------------------------
+	VerRasterInput	|	
+	---------------------------------------------------------------------
+	HorRasterInput	|
+	---------------------------------------------------------------------
+	MotorBRKCtrl	|
+	---------------------------------------------------------------------
+	MotorENACtrl	|
+	---------------------------------------------------------------------
+	MotorFRCtrl		|
+	---------------------------------------------------------------------
+	
+	
+
+
+2.数据结构设计
+		
+		typedef struct{
+			uint8_t 	VerticalRasterState;			//垂直状态标记位
+			uint8_t		HorizontalRasterState;			//水平状态标记位
+			uint8_t		RunningState;					//运行状态  0-停止 1-运行
+			uint8_t		RunDir;							//运行方向  0-Down 1-Up
+			uint16_t	RunningSpeed;					//开闸速度
+			uint8_t 	VStartFlag;						//垂直启动标记位（扩展）
+			uint8_t     HStartFlag;						//水平启动标记位（扩展）
+			uint8_t     FilterCnt;						//滤波计数器	
+		}MOTORMACHINE,*pMOTORMACHINE;
+		
+		MOTORMACHINE gMotorMachine;
+		
+		
+		void TimHandler()
+		{
+			if(HAL_GPIO_ReadPin(,))
+			{
+				gGateMachine.VerticalRasterState = 1;
+				BSP_Motor_Stop();
+				gGateMachine.RunningState = 0;
+			}
+			else
+			{
+				gGateMachine.VerticalRasterState = 0;
+			}
+			
+			if(HAL_GPIO_ReadPin(,))
+			{
+				gGateMachine.HorizontalRasterState = 1;
+				BSP_Motor_Stop();
+				gGateMachine.RunningState = 0;
+			}
+			else
+			{
+				gGateMachine.HorizontalRasterState = 0;
+			}
+			
+			
+		}
+		
+3.外接板设计：
+	VCC | VerOutput | GND  ++++  VCC | HorOutput | GND  
+	
+	GND | Motor_EN  | Motor_REV | Motor_BRK 
+	
+		
+		
