@@ -77,19 +77,6 @@
 
 /* USER CODE BEGIN Private defines */
 
-   typedef struct s_MotorMachine{
-     uint8_t     VerticalRasterState;
-     uint8_t     HorizontalRasterState;
-     uint8_t     RuningState;
-     uint8_t     RunDir;
-     uint16_t    SetRunSpeed;
-     uint16_t    CurrentRunSpeed;
-     uint8_t     VStartFlag;
-     uint8_t     HStartFlag;
-     uint8_t     VerFilterCnt;
-     uint8_t     HorFilterCnt;
-   }MOTORMACHINE,*pMOTORMACHINE;
-
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

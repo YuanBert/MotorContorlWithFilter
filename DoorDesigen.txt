@@ -1,5 +1,5 @@
 1.逻辑设计
-	定时器中断（1ms）：
+	定时器中断（2ms）：
 	在定时器中断进行光电管限位器的状态，读取水平限位器和垂直限位器的状态。
 	
 	引脚命名：
@@ -34,32 +34,68 @@
 		MOTORMACHINE gMotorMachine;
 		
 		
-		void TimHandler()
-		{
-			if(HAL_GPIO_ReadPin(,))
-			{
-				gGateMachine.VerticalRasterState = 1;
-				BSP_Motor_Stop();
-				gGateMachine.RunningState = 0;
-			}
-			else
-			{
-				gGateMachine.VerticalRasterState = 0;
-			}
-			
-			if(HAL_GPIO_ReadPin(,))
-			{
-				gGateMachine.HorizontalRasterState = 1;
-				BSP_Motor_Stop();
-				gGateMachine.RunningState = 0;
-			}
-			else
-			{
-				gGateMachine.HorizontalRasterState = 0;
-			}
-			
-			
-		}
+void TimHandler()
+{
+  if(htim4.Instance == htim->Instance)
+  {
+    gVerCurrentReadVal = HAL_GPIO_ReadPin(VerRasterInput_GPIO_Port,VerRasterInput_Pin);
+    gHorCurrentReadVal = HAL_GPIO_ReadPin(HorRasterInput_GPIO_Port,HorRasterInput_Pin);
+    
+    if(1 == gVerCurrentReadVal && 1 == gVerLastReadVal)
+    {
+      gMotorMachine.VerFilterCnt ++;
+      if(gMotorMachine.VerFilterCnt > 10)       //高电平信号持续时间大于10MS,
+      {
+        gMotorMachine.VerticalRasterState = 1;  //到位停机
+        gMotorMachine.VerFilterCnt = 0;
+        if(UPDIR == gMotorMachine.RunDir)
+        {
+          gMotorMachine.RunDir = DOWNDIR;
+          gMotorMachine.RuningState = 0;
+          BSP_Motor_Stop();
+        }
+      }
+    }
+    else
+    {
+      gMotorMachine.VerticalRasterState = 0;
+      gMotorMachine.VerFilterCnt = 0;
+    }
+    
+    if(1 == gHorCurrentReadVal && 1 == gHorLastReadVal)
+    {
+      gMotorMachine.HorFilterCnt++;
+      if(gMotorMachine.HorFilterCnt > 10)
+      {
+        gMotorMachine.HorizontalRasterState = 1;
+        gMotorMachine.HorFilterCnt = 0;
+        if(DOWNDIR == gMotorMachine.RunDir)
+        {
+          
+          gMotorMachine.RunDir = UPDIR;
+          gMotorMachine.RuningState = 0;
+          BSP_Motor_Stop();
+        }
+      }
+    }
+    else
+    {
+      gMotorMachine.HorizontalRasterState = 0;
+      gMotorMachine.HorFilterCnt = 0;
+    }
+    
+    gVerLastReadVal = gVerCurrentReadVal;
+    gHorLastReadVal = gHorCurrentReadVal;
+    
+    gTIM4Cnt++;
+    if(gTIM4Cnt > 8000)
+    {
+      gTIM4Cnt = 0;
+      gTIM4CntUpFlag = 1;
+      gMotorMachine.StartFlag = 1;
+    }
+  }			
+}
 		
 3.外接板设计：
 	VCC | VerOutput | GND  ++++  VCC | HorOutput | GND  

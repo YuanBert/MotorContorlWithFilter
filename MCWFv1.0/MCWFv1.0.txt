@@ -37,7 +37,7 @@ SOFTWARE PROJECT
 Project Settings : 
 Project Name : MCWFv1.0
 Project Folder : E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0
-Toolchain / IDE : EWARM
+Toolchain / IDE : MDK-ARM V5
 Firmware Package Name and Version : STM32Cube FW_F1 V1.6.0
 
 

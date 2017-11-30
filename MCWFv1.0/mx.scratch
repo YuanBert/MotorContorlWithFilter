@@ -4,13 +4,12 @@
 <CMSIS>..\Drivers\CMSIS</CMSIS>
 <HAL_Driver>D:\Lib\STM32Cube_FW_F1_V1.6.0\Drivers\CMSIS</HAL_Driver>
 
-<Toolchain>MDK-ARM</Toolchain>
-	<Toolversion>5</Toolversion>
+<Toolchain>EWARM</Toolchain>
+	<Toolversion>0</Toolversion>
 <Version>0</Version>
 
 <filestoremove>
 	<file>
-	   		<name>..\Drivers\CMSIS\Device\ST\STM32F1xx\Source\Templates\arm\startup_stm32f103xe.s</name>
 	</file>
 </filestoremove>
 
@@ -35,7 +34,7 @@
     <usedDebug>true</usedDebug>
     	<debugprobe>swd</debugprobe>
     <optimization></optimization>
-    <icfloc>1</icfloc>
+    <icfloc>0</icfloc>
     <Adefines>
         <define></define>
     </Adefines>   
@@ -54,7 +53,7 @@
         </Adefines>
         <Cdefines>
             <define>USE_FULL_LL_DRIVER</define>
-            <define>MBEDTLS_CONFIG_FILE=&lt;mbedtls_config.h&gt;</define>
+            <define>MBEDTLS_CONFIG_FILE=&quot;mbedtls_config.h&quot;</define>
             <define>_TIMEVAL_DEFINED</define>
             <define>_SYS_TIME_H_</define>
         </Cdefines>         

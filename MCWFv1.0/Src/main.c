@@ -52,10 +52,9 @@
 #include "tim.h"
 #include "usb_device.h"
 #include "gpio.h"
-#include "BSP_Motor.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "BSP_Motor.h"
 //#include "BSP_Motor.h"
 
 /* USER CODE END Includes */
@@ -70,6 +69,10 @@ uint8_t gVerLastReadVal;
 uint8_t gVerCurrentReadVal;
 uint8_t gHorLastReadVal;
 uint8_t gHorCurrentReadVal;
+uint8_t gTIM4CntUpFlag;
+
+uint16_t gTIM4Cnt;
+
 
 
 
@@ -121,6 +124,8 @@ int main(void)
   MX_NVIC_Init();
 
   /* USER CODE BEGIN 2 */
+  HAL_TIM_Base_Start_IT(&htim4);
+  BSP_Motor_Init();
 
   /* USER CODE END 2 */
 
@@ -131,6 +136,11 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+    if(1 == gMotorMachine.StartFlag)
+    {
+      BSP_Running_Door();
+      gMotorMachine.StartFlag = 0;
+    }
 
   }
   /* USER CODE END 3 */
@@ -223,14 +233,58 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     gVerCurrentReadVal = HAL_GPIO_ReadPin(VerRasterInput_GPIO_Port,VerRasterInput_Pin);
     gHorCurrentReadVal = HAL_GPIO_ReadPin(HorRasterInput_GPIO_Port,HorRasterInput_Pin);
     
-    if(1 == gVerCurrentReadVal)
+    if(1 == gVerCurrentReadVal && 1 == gVerLastReadVal)
     {
-    
+      gMotorMachine.VerFilterCnt ++;
+      if(gMotorMachine.VerFilterCnt > 5)       //高电平信号持续时间大于10MS,
+      {
+        gMotorMachine.VerticalRasterState = 1;  //到位停机
+        gMotorMachine.VerFilterCnt = 0;
+        if(UPDIR == gMotorMachine.RunDir)
+        {
+          gMotorMachine.RunDir = DOWNDIR;
+          gMotorMachine.RuningState = 0;
+          BSP_Motor_Stop();
+        }
+      }
+    }
+    else
+    {
+      gMotorMachine.VerticalRasterState = 0;
+      gMotorMachine.VerFilterCnt = 0;
     }
     
-    if(1 == gHorCurrentReadVal)
+    if(1 == gHorCurrentReadVal && 1 == gHorLastReadVal)
     {
+      gMotorMachine.HorFilterCnt++;
+      if(gMotorMachine.HorFilterCnt > 5)
+      {
+        gMotorMachine.HorizontalRasterState = 1;
+        gMotorMachine.HorFilterCnt = 0;
+        if(DOWNDIR == gMotorMachine.RunDir)
+        {
+          
+          gMotorMachine.RunDir = UPDIR;
+          gMotorMachine.RuningState = 0;
+          BSP_Motor_Stop();
+        }
+      }
+    }
+    else
+    {
+      gMotorMachine.HorizontalRasterState = 0;
+      gMotorMachine.HorFilterCnt = 0;
+    }
     
+    gVerLastReadVal = gVerCurrentReadVal;
+    gHorLastReadVal = gHorCurrentReadVal;
+    
+    gTIM4Cnt++;
+    if(gTIM4Cnt > 4000)
+    {
+      gTIM4Cnt = 0;
+      gTIM4CntUpFlag = 1;
+      gMotorMachine.StartFlag = 1;
     }
   }
 

@@ -48,8 +48,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __gpio_H
-#define __gpio_H
+#ifndef __BSP_MOTOR_H
+#define __BSP_MOTOR_H
 #ifdef __cplusplus
  extern "C" {
 #endif
@@ -64,19 +64,30 @@
 /* USER CODE END  defines */
    
 /* USER CODE BEGIN Prototypes */
+   
+   enum e_MOTOR_ERROR_CODE{
+        Motor_OK = 0,
+        Motor_RunErr = 1,
+        Motor_VerRasterErr = 2,
+        Motor_HorRasterErr = 3,
+        Motor_OtherErr = 4
+   };
+   
+   typedef enum e_MOTOR_ERROR_CODE MOTOR_ERROR_CODE;
  
-//   typedef struct s_MotorMachine{
-//     uint8_t     VerticalRasterState;
-//     uint8_t     HorizontalRasterState;
-//     uint8_t     RuningState;
-//     uint8_t     RunDir;
-//     uint16_t    SetRunSpeed;
-//     uint16_t    CurrentRunSpeed;
-//     uint8_t     VStartFlag;
-//     uint8_t     HStartFlag;
-//     uint8_t     VerFilterCnt;
-//     uint8_t     HorFilterCnt;
-//   }MOTORMACHINE,*pMOTORMACHINE;
+   typedef struct s_MotorMachine{
+     uint8_t     VerticalRasterState;
+     uint8_t     HorizontalRasterState;
+     uint8_t     RuningState;
+     uint8_t     RunDir;
+     uint16_t    SetRunSpeed;
+     uint16_t    CurrentRunSpeed;
+     uint8_t     StartFlag;
+     uint8_t     VerFilterCnt;
+     uint8_t     HorFilterCnt;
+     uint8_t     Motor_Error;
+   }MOTORMACHINE,*pMOTORMACHINE;
+   
 
 /* USER CODE END Prototypes */
 
@@ -89,6 +100,8 @@ void BSP_Motor_Stop(void);
 void BSP_Motor_Start(void);
 
 void BSP_Running_Door(void);
+
+void BSP_Checking_Err(void);
    
 #ifdef __cplusplus
 }

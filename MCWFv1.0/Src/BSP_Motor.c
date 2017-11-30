@@ -51,6 +51,7 @@
 #include "gpio.h"
 
 extern MOTORMACHINE gMotorMachine;
+extern void SendDate(uint8_t* pDate);
 
 void BSP_Motor_Init(void)
 {
@@ -60,10 +61,11 @@ void BSP_Motor_Init(void)
   
   HAL_Delay(100);
   
-  gMotorMachine.RuningState = 1;
+  gMotorMachine.RuningState = 0;
   gMotorMachine.RunDir = 0;
   gMotorMachine.HorFilterCnt = 0;
   gMotorMachine.VerFilterCnt = 0;
+  gMotorMachine.Motor_Error = Motor_OK;
 }
 
 void BSP_Motor_Running(uint8_t nDir)
@@ -105,9 +107,22 @@ void BSP_Running_Door(void)
   if(0 == gMotorMachine.HorizontalRasterState && 0 == gMotorMachine.VerticalRasterState)
   {
     BSP_Motor_Running(DOWNDIR);
+    return ;
+  }
+  if(1 == gMotorMachine.HorizontalRasterState && 1 == gMotorMachine.VerticalRasterState)
+  {
+    gMotorMachine.Motor_Error = Motor_RunErr;
+    gMotorMachine.RuningState = 0;
+    return ;
   }
   
-  
+  BSP_Motor_Running(gMotorMachine.RunDir);
+}
+
+void BSP_Checking_Err(void)
+{
+  uint8_t code = gMotorMachine.Motor_Error;
+  SendDate(&code);
 }
 
 /****************************** end of file ***********************************/
