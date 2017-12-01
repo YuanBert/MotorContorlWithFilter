@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.20.1.14183/W32 for ARM                30/Nov/2017  19:44:34
+# IAR ELF Linker V8.20.1.14183/W32 for ARM                01/Dec/2017  09:45:40
 # Copyright 2007-2017 IAR Systems AB.
 #
 #    Output file  =  
@@ -8,7 +8,7 @@
 #    Map file     =  
 #        E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\List\MCWFv1.0.map
 #    Command line =  
-#        -f C:\Users\17657\AppData\Local\Temp\EW2738.tmp
+#        -f C:\Users\17657\AppData\Local\Temp\EW3122.tmp
 #        (E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\BSP_Motor.o
 #        E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\gpio.o
 #        E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\main.o
@@ -212,23 +212,23 @@ initialize by copy { rw };
     .data            inited   0x20000154     0x4  usbd_desc.o [1]
                             - 0x20000158   0x158
 
-"P2", part 2 of 3:                        0x1b00
+"P2", part 2 of 3:                        0x1b04
   .bss               zero     0x20000158  0x1000  usbd_cdc_if.o [1]
   .bss               zero     0x20001158   0x460  usbd_conf.o [1]
   .bss               zero     0x200015b8   0x224  usb_device.o [1]
   .bss               zero     0x200017dc   0x220  usbd_conf.o [1]
   .bss               zero     0x200019fc   0x200  usbd_desc.o [1]
   .bss               zero     0x20001bfc    0x40  tim.o [1]
-  .bss               zero     0x20001c3c    0x14  main.o [1]
-  .bss               zero     0x20001c50     0x4  stm32f1xx_hal.o [1]
-  .bss               zero     0x20001c54     0x1  usbd_cdc.o [1]
-  .bss               zero     0x20001c55     0x1  usbd_ctlreq.o [1]
-                            - 0x20001c56  0x1afe
+  .bss               zero     0x20001c3c    0x18  main.o [1]
+  .bss               zero     0x20001c54     0x4  stm32f1xx_hal.o [1]
+  .bss               zero     0x20001c58     0x1  usbd_cdc.o [1]
+  .bss               zero     0x20001c59     0x1  usbd_ctlreq.o [1]
+                            - 0x20001c5a  0x1b02
 
 "P2", part 3 of 3:                         0x400
-  CSTACK                      0x20001c58   0x400  <Block>
-    CSTACK           uninit   0x20001c58   0x400  <Block tail>
-                            - 0x20002058   0x400
+  CSTACK                      0x20001c60   0x400  <Block>
+    CSTACK           uninit   0x20001c60   0x400  <Block tail>
+                            - 0x20002060   0x400
 
 
 *******************************************************************************
@@ -238,8 +238,8 @@ initialize by copy { rw };
           Address     Size
           -------     ----
 Zero (__iar_zero_init3)
-    1 destination range, total size 0x1afe:
-          0x20000158  0x1afe
+    1 destination range, total size 0x1b02:
+          0x20000158  0x1b02
 
 Copy/lz77 (__iar_lz77_init_single3)
     1 source range, total size 0xcf (60% of destination):
@@ -258,7 +258,7 @@ Copy/lz77 (__iar_lz77_init_single3)
 E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj: [1]
     BSP_Motor.o                 232
     gpio.o                      178
-    main.o                      414                20
+    main.o                      414                24
     startup_stm32f103xe.o       552
     stm32f1xx_hal.o             134                 4
     stm32f1xx_hal_cortex.o      230
@@ -283,7 +283,7 @@ E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\O
     usbd_desc.o                 192       32      564
     usbd_ioreq.o                 96
     -------------------------------------------------
-    Total:                   11 534      207    7 254
+    Total:                   11 534      207    7 258
 
 command line: [2]
     -------------------------------------------------
@@ -314,7 +314,7 @@ shb_l.a: [5]
     Gaps                         22
     Linker created                        32    1 024
 -----------------------------------------------------
-    Grand Total:             11 996      239    8 278
+    Grand Total:             11 996      239    8 282
 
 
 *******************************************************************************
@@ -327,17 +327,17 @@ Entry                      Address   Size  Type      Object
 .iar.init_table$$Limit  0x08002db0          --   Gb  - Linker created -
 ?main                   0x08002db1         Code  Gb  cmain.o [4]
 AHBPrescTable           0x08002c90   0x10  Data  Gb  system_stm32f1xx.o [1]
-BSP_Motor_Init          0x08001fd5   0x2e  Code  Gb  BSP_Motor.o [1]
-BSP_Motor_Running       0x08002003   0x36  Code  Gb  BSP_Motor.o [1]
-BSP_Motor_Stop          0x0800204b   0x1a  Code  Gb  BSP_Motor.o [1]
-BSP_Running_Door        0x08002075   0x3a  Code  Gb  BSP_Motor.o [1]
+BSP_Motor_Init          0x08001fd5   0x30  Code  Gb  BSP_Motor.o [1]
+BSP_Motor_Running       0x08002005   0x36  Code  Gb  BSP_Motor.o [1]
+BSP_Motor_Stop          0x0800204d   0x1a  Code  Gb  BSP_Motor.o [1]
+BSP_Running_Door        0x08002077   0x3a  Code  Gb  BSP_Motor.o [1]
 BusFault_Handler        0x08002d2b    0x2  Code  Gb  stm32f1xx_it.o [1]
 CDC_Control_FS          0x08002cc3    0x4  Code  Lc  usbd_cdc_if.o [1]
 CDC_DeInit_FS           0x08002cbf    0x4  Code  Lc  usbd_cdc_if.o [1]
 CDC_Init_FS             0x08002ca1   0x1e  Code  Lc  usbd_cdc_if.o [1]
 CDC_Receive_FS          0x08002cc7   0x16  Code  Lc  usbd_cdc_if.o [1]
-CSTACK$$Base            0x20001c58          --   Gb  - Linker created -
-CSTACK$$Limit           0x20002058          --   Gb  - Linker created -
+CSTACK$$Base            0x20001c60          --   Gb  - Linker created -
+CSTACK$$Limit           0x20002060          --   Gb  - Linker created -
 DebugMon_Handler        0x08002d31    0x2  Code  Gb  stm32f1xx_it.o [1]
 FS_Desc                 0x20000124   0x1c  Data  Gb  usbd_desc.o [1]
 HAL_Delay               0x08002b59   0x1e  Code  Wk  stm32f1xx_hal.o [1]
@@ -456,7 +456,7 @@ USBD_CDC_RegisterInterface
 USBD_CDC_SetRxBuffer    0x08002b1b    0xc  Code  Gb  usbd_cdc.o [1]
 USBD_CDC_SetTxBuffer    0x08002b0b   0x10  Code  Gb  usbd_cdc.o [1]
 USBD_CDC_Setup          0x080029fd   0x66  Code  Lc  usbd_cdc.o [1]
-USBD_CDC_Setup::ifalt   0x20001c54    0x1  Data  Lc  usbd_cdc.o [1]
+USBD_CDC_Setup::ifalt   0x20001c58    0x1  Data  Lc  usbd_cdc.o [1]
 USBD_ClrClassConfig     0x080011dd    0xa  Code  Gb  usbd_core.o [1]
 USBD_CtlContinueRx      0x0800195f    0x4  Code  Gb  usbd_ioreq.o [1]
 USBD_CtlContinueSendData
@@ -508,7 +508,7 @@ USBD_LangIDDesc         0x20000154    0x4  Data  Gb  usbd_desc.o [1]
 USBD_ParseSetupRequest  0x080018a7   0x28  Code  Gb  usbd_ctlreq.o [1]
 USBD_RegisterClass      0x080011ad   0x10  Code  Gb  usbd_core.o [1]
 USBD_SetClassConfig     0x080011c7   0x16  Code  Gb  usbd_core.o [1]
-USBD_SetConfig::cfgidx  0x20001c55    0x1  Data  Lc  usbd_ctlreq.o [1]
+USBD_SetConfig::cfgidx  0x20001c59    0x1  Data  Lc  usbd_ctlreq.o [1]
 USBD_Start              0x080011bd    0xa  Code  Gb  usbd_core.o [1]
 USBD_StdDevReq          0x08001581  0x12a  Code  Gb  usbd_ctlreq.o [1]
 USBD_StdEPReq           0x080016e9   0xbc  Code  Gb  usbd_ctlreq.o [1]
@@ -558,18 +558,18 @@ _call_main              0x08002dbd         Code  Gb  cmain.o [4]
 _exit                   0x08002dd9         Code  Gb  cexit.o [4]
 _main                   0x08002dcb         Code  Gb  cmain.o [4]
 exit                    0x08002dd3    0x4  Code  Gb  exit.o [3]
-gHorCurrentReadVal      0x20001c4b    0x1  Data  Gb  main.o [1]
-gHorLastReadVal         0x20001c4a    0x1  Data  Gb  main.o [1]
-gMotorMachine           0x20001c3c    0xc  Data  Gb  main.o [1]
-gTIM4Cnt                0x20001c4e    0x2  Data  Gb  main.o [1]
-gTIM4CntUpFlag          0x20001c4c    0x1  Data  Gb  main.o [1]
-gVerCurrentReadVal      0x20001c49    0x1  Data  Gb  main.o [1]
-gVerLastReadVal         0x20001c48    0x1  Data  Gb  main.o [1]
+gHorCurrentReadVal      0x20001c4f    0x1  Data  Gb  main.o [1]
+gHorLastReadVal         0x20001c4e    0x1  Data  Gb  main.o [1]
+gMotorMachine           0x20001c3c   0x10  Data  Gb  main.o [1]
+gTIM4Cnt                0x20001c52    0x2  Data  Gb  main.o [1]
+gTIM4CntUpFlag          0x20001c50    0x1  Data  Gb  main.o [1]
+gVerCurrentReadVal      0x20001c4d    0x1  Data  Gb  main.o [1]
+gVerLastReadVal         0x20001c4c    0x1  Data  Gb  main.o [1]
 hUsbDeviceFS            0x200015b8  0x224  Data  Gb  usb_device.o [1]
 hpcd_USB_FS             0x20001158  0x460  Data  Gb  usbd_conf.o [1]
 htim4                   0x20001bfc   0x40  Data  Gb  tim.o [1]
 main                    0x080013b1   0x52  Code  Gb  main.o [1]
-uwTick                  0x20001c50    0x4  Data  Gb  stm32f1xx_hal.o [1]
+uwTick                  0x20001c54    0x4  Data  Gb  stm32f1xx_hal.o [1]
 
 
 [1] = E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj
@@ -580,7 +580,7 @@ uwTick                  0x20001c50    0x4  Data  Gb  stm32f1xx_hal.o [1]
 
   11 996 bytes of readonly  code memory
      239 bytes of readonly  data memory
-   8 278 bytes of readwrite data memory
+   8 282 bytes of readwrite data memory
 
 Errors: none
 Warnings: none

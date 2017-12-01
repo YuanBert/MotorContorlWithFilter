@@ -65,6 +65,7 @@ void BSP_Motor_Init(void)
   gMotorMachine.RunDir = 0;
   gMotorMachine.HorFilterCnt = 0;
   gMotorMachine.VerFilterCnt = 0;
+  gMotorMachine.EncounteredFlag =0;
   gMotorMachine.Motor_Error = Motor_OK;
 }
 
