@@ -124,6 +124,7 @@ int main(void)
   MX_NVIC_Init();
 
   /* USER CODE BEGIN 2 */
+  //HAL_TIM_Base_Start(&htim4);
   HAL_TIM_Base_Start_IT(&htim4);
   BSP_Motor_Init();
 
@@ -280,7 +281,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     gHorLastReadVal = gHorCurrentReadVal;
     
     gTIM4Cnt++;
-    if(gTIM4Cnt > 4000)
+    if(gTIM4Cnt > 8000)
     {
       gTIM4Cnt = 0;
       gTIM4CntUpFlag = 1;

@@ -107,6 +107,7 @@ void BSP_Running_Door(void)
   gMotorMachine.RuningState = 1;
   if(0 == gMotorMachine.HorizontalRasterState && 0 == gMotorMachine.VerticalRasterState)
   {
+    gMotorMachine.RunDir = DOWNDIR;
     BSP_Motor_Running(DOWNDIR);
     return ;
   }
