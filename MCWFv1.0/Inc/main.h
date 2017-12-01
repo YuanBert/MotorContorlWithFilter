@@ -57,6 +57,8 @@
 
 /* Private define ------------------------------------------------------------*/
 
+#define ISampleChanle_Pin GPIO_PIN_1
+#define ISampleChanle_GPIO_Port GPIOA
 #define MotorBRKCtrl_Pin GPIO_PIN_5
 #define MotorBRKCtrl_GPIO_Port GPIOC
 #define MotorENACtrl_Pin GPIO_PIN_0

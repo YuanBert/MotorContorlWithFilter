@@ -1,5 +1,5 @@
 1.逻辑设计
-	定时器中断（2ms）：
+	定时器中断（1ms），算法识别时间长度为5ms
 	在定时器中断进行光电管限位器的状态，读取水平限位器和垂直限位器的状态。
 	
 	引脚命名：
@@ -16,6 +16,8 @@
 	---------------------------------------------------------------------
 	
 	
+	
+	
 
 
 2.数据结构设计
@@ -29,6 +31,7 @@
 			uint8_t 	VStartFlag;						//垂直启动标记位（扩展）
 			uint8_t     HStartFlag;						//水平启动标记位（扩展）
 			uint8_t     FilterCnt;						//滤波计数器	
+			uint8_t		GentleSensorFlag;				//地感信号Flag
 		}MOTORMACHINE,*pMOTORMACHINE;
 		
 		MOTORMACHINE gMotorMachine;

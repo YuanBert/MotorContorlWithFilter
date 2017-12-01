@@ -348,7 +348,7 @@
                     <state>$PROJ_DIR$/../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc</state>
                     <state>$PROJ_DIR$/../Drivers/CMSIS/Device/ST/STM32F1xx/Include</state>
                     <state>$PROJ_DIR$/../Drivers/CMSIS/Include</state>
-                <state /><state /><state /><state /><state /><state /><state /></option>
+                <state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /><state /></option>
                 <option>
                     <name>CCStdIncCheck</name>
                     <state>0</state>
@@ -1062,7 +1062,11 @@
             <file>
                 <name>$PROJ_DIR$\..\Src\usbd_desc.c</name>
             </file>
-        </group>
+        <file>
+                <name>$PROJ_DIR$/../Src/dma.c</name>
+            </file><file>
+                <name>$PROJ_DIR$/../Src/adc.c</name>
+            </file></group>
     </group>
     <group>
         <name>Drivers</name>
@@ -1119,7 +1123,11 @@
             <file>
                 <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_usb.c</name>
             </file>
-        </group>
+        <file>
+                <name>$PROJ_DIR$/../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc_ex.c</name>
+            </file><file>
+                <name>$PROJ_DIR$/../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc.c</name>
+            </file></group>
     </group>
     <group>
         <name>Middlewares</name>

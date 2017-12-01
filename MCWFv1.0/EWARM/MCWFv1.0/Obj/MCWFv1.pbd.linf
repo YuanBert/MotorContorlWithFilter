@@ -1,8 +1,12 @@
 ﻿E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\MCWFv1.pbd
+E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\adc.pbi
 E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\BSP_Motor.pbi
+E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\dma.pbi
 E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\gpio.pbi
 E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\main.pbi
 E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\stm32f1xx_hal.pbi
+E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\stm32f1xx_hal_adc.pbi
+E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\stm32f1xx_hal_adc_ex.pbi
 E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\stm32f1xx_hal_cortex.pbi
 E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\stm32f1xx_hal_dma.pbi
 E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\MCWFv1.0\Obj\stm32f1xx_hal_flash.pbi
