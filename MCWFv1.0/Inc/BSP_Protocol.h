@@ -110,30 +110,8 @@ struct sRequestCmd
   uint8_t       ProErrorCode;               //´íÎó´úÂë
 };
    
-/*******************************************************************************
-** struct: sACKCmd
-**
-** DESCRIPTION:
-**  --this is the ACK CMD about A9 and stm32
-**
-** CREATED: 2017/12/4, by Bert
-**
-** FILE: BSP_Protocol.h
-**
-** AUTHOR: Bert.Zhang
-********************************************************************************
-*/
-struct sACKCmd
-{
-  uint8_t       AckCmdCode;
-  uint8_t       Code;
-  uint8_t       ReciveOkFlag;
-  uint8_t       AckOkayFlag;
-  uint8_t       AckRequestOk;
-};
 
 typedef struct sRequestCmd          REQCMD, * pREQCMD;
-typedef struct sACKCmd              ACKCMD    , * pACKCMD;
 typedef struct sUsartReciveType     USARTRECIVETYPE,    * pUSARTRECIVETYPE;
 
 typedef enum 
@@ -146,7 +124,7 @@ typedef enum
 
 BSP_StatusTypeDef BSP_SendRequestCmd(pREQCMD pRequestCmd);
 BSP_StatusTypeDef BSP_AckRequestCmd(pREQCMD pRequestCmd);
-BSP_StatusTypeDef BSP_SendAckCmd(pACKCMD pAckCmd);
+BSP_StatusTypeDef BSP_SendAckCmd(pREQCMD pAckCmd);
 void BSP_CheckRequestCmd(void);
 
    

@@ -95,7 +95,7 @@ BSP_StatusTypeDef BSP_AckRequestCmd(pREQCMD pRequestCmd)
     return state;
 }
 
-BSP_StatusTypeDef BSP_SendAckCmd(pACKCMD pAckCmd)
+BSP_StatusTypeDef BSP_SendAckCmd(pREQCMD pAckCmd)
 {
     BSP_StatusTypeDef state = BSP_OK;
     
