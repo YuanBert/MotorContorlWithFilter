@@ -56,6 +56,28 @@
 #include "main.h"
 #include "stdint.h"
 
+#define BSP_RX_LEN          512
+   
+/*******************************************************************************
+** struct: sUsartReciveType
+**
+** DESCRIPTION:
+**  --串口接收数据结构体
+**
+** CREATED: 2017/12/4, by Bert
+**
+** FILE: BSP_Protocol.h
+**
+** AUTHOR: Bert.Zhang
+********************************************************************************
+*/
+struct sUsartReciveType
+{
+  uint8_t   RX_Flag:1;              //IDLE recive flag
+  uint16_t  RX_Size;                //receive length
+  uint8_t   RX_pData[BSP_RX_LEN];   //DMA receive buffer
+};
+   
 /*******************************************************************************
 ** struct: sRequestCmd
 **
@@ -71,15 +93,21 @@
 */
 struct sRequestCmd
 {
-  uint16_t      HeaderFlag;              //0x5353
   uint8_t       RequestCmdCode;
-  uint8_t       Param;
-  uint8_t       data0;
-  uint8_t       data1;
-  uint8_t       data2;
-  uint8_t       SumCheck;
-  uint16_t      EndFlag;                 //0xAAAA
-  uint8_t       ReciveOkFlag;
+  uint8_t       RequestParam;
+  uint8_t       Requestdata0;
+  uint8_t       Requestdata1;
+  uint8_t       Requestdata2;
+
+  uint8_t       AckCmdCode;
+  uint8_t       AckCode;
+  
+  uint8_t       ReciveOrSendFlag;           //接收或者发送标志位  
+                                            // 0：空闲    1：接收    2：发送
+  uint8_t       RevRequestFlag;               //接受Reqquest命令完成
+  uint8_t       RevAckCmd;
+  uint8_t       SendTimesCnt;               //发送次数计数
+  uint8_t       ProErrorCode;               //错误代码
 };
    
 /*******************************************************************************
@@ -97,17 +125,29 @@ struct sRequestCmd
 */
 struct sACKCmd
 {
-  uint16_t      HeaderFlag;         //0x5353
   uint8_t       AckCmdCode;
   uint8_t       Code;
-  uint8_t       Sumcheck;
-  uint16_t      EndFlag;            //0xAAAA
   uint8_t       ReciveOkFlag;
+  uint8_t       AckOkayFlag;
+  uint8_t       AckRequestOk;
 };
 
-typedef struct sRequestCmd RequestCmd, * pRequestCmd;
-typedef struct sACKCmd     ACKCmd    , * pACKCmd;
+typedef struct sRequestCmd          REQCMD, * pREQCMD;
+typedef struct sACKCmd              ACKCMD    , * pACKCMD;
+typedef struct sUsartReciveType     USARTRECIVETYPE,    * pUSARTRECIVETYPE;
 
+typedef enum 
+{
+  BSP_OK       = 0x00U,
+  BSP_ERROR    = 0x01U,
+  BSP_BUSY     = 0x02U,
+  BSP_TIMEOUT  = 0x03U
+}BSP_StatusTypeDef;
+
+BSP_StatusTypeDef BSP_SendRequestCmd(pREQCMD pRequestCmd);
+BSP_StatusTypeDef BSP_AckRequestCmd(pREQCMD pRequestCmd);
+BSP_StatusTypeDef BSP_SendAckCmd(pACKCMD pAckCmd);
+void BSP_CheckRequestCmd(void);
 
    
 #ifdef __cplusplus

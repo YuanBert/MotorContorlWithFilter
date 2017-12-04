@@ -58,6 +58,7 @@
 
 /* USER CODE BEGIN Includes */
 #include "BSP_Motor.h"
+#include "BSP_Protocol.h"
 //#include "BSP_Motor.h"
 
 /* USER CODE END Includes */
@@ -67,6 +68,8 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 MOTORMACHINE gMotorMachine;
+REQCMD      gRequestCmd;
+extern USARTRECIVETYPE UsartType;
 
 uint8_t gVerLastReadVal;
 uint8_t gVerCurrentReadVal;
@@ -125,6 +128,7 @@ int main(void)
   MX_USB_DEVICE_Init();
   MX_ADC1_Init();
   MX_USART1_UART_Init();
+  MX_TIM5_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -132,6 +136,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   //HAL_TIM_Base_Start(&htim4);
   HAL_TIM_Base_Start_IT(&htim4);
+  HAL_TIM_Base_Start_IT(&htim5);
   BSP_Motor_Init();
 
   /* USER CODE END 2 */
@@ -303,7 +308,28 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
       gMotorMachine.StartFlag = 1;
     }
   }
-
+  
+  if(htim5.Instance == htim->Instance)
+  {
+    if(UsartType.RX_Flag)
+    {
+      UsartType.RX_Flag = 0;
+      if(0x53 == *(UsartType.RX_pData) && 0x53 == *(UsartType.RX_pData + 1))
+      {
+        if(0xA0 == (*(UsartType.RX_pData + 2) && 0xA0))
+        {
+          
+        }
+        else
+        {
+        
+        }
+      }
+    }
+    
+    
+    
+  }
 }
 
 /* USER CODE END 4 */

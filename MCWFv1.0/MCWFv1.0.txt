@@ -14,6 +14,7 @@ SYS	Serial Wire	SYS_JTCK-SWCLK	PA14
 SYS	Serial Wire	SYS_JTMS-SWDIO	PA13
 SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
 TIM4	Internal Clock	TIM4_VS_ClockSourceINT	VP_TIM4_VS_ClockSourceINT
+TIM5	Internal Clock	TIM5_VS_ClockSourceINT	VP_TIM5_VS_ClockSourceINT
 USART1	Asynchronous	USART1_RX	PA10
 USART1	Asynchronous	USART1_TX	PA9
 USB	Device (FS)	USB_DM	PA11
