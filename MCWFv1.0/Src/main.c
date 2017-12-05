@@ -68,17 +68,22 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 MOTORMACHINE gMotorMachine;
-REQCMD      gRequestCmd;
+PROTOCOLCMD      gProtocolCmd;
 extern USARTRECIVETYPE UsartType;
+
 
 uint8_t gVerLastReadVal;
 uint8_t gVerCurrentReadVal;
 uint8_t gHorLastReadVal;
 uint8_t gHorCurrentReadVal;
 uint8_t gTIM4CntUpFlag;
+uint8_t gTIM5CntUpFlag;
+uint8_t gTIM5SendCntUpFlag;
 
 uint16_t gTIM4Cnt;
-
+uint16_t gTIM5Cnt;
+uint16_t gTIM5SendCnt;
+  
 
 
 
@@ -102,7 +107,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -138,6 +142,9 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim4);
   HAL_TIM_Base_Start_IT(&htim5);
   BSP_Motor_Init();
+  BSP_ProtocolInit();
+  HAL_UART_Receive_DMA(&huart1,UsartType.RX_pData,BSP_RX_LEN);
+  __HAL_UART_ENABLE_IT(&huart1,UART_IT_IDLE);   //使能串口空闲中断
 
   /* USER CODE END 2 */
 
@@ -152,6 +159,21 @@ int main(void)
     {
       BSP_Running_Door();
       gMotorMachine.StartFlag = 0;
+    }
+
+    
+    BSP_HandingCmdWithTestVersion();
+        
+    if(gTIM5CntUpFlag)
+    {
+      gTIM5CntUpFlag = 0;
+      BSP_HandingUartDataWithTestVersion();
+      //调用应答函数来处
+    }
+    
+    if(gTIM5SendCntUpFlag)
+    {
+      BSP_TrySend5TimesCmd();
     }
   }
   /* USER CODE END 3 */
@@ -222,18 +244,24 @@ static void MX_NVIC_Init(void)
   /* USB_LP_CAN1_RX0_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(USB_LP_CAN1_RX0_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(USB_LP_CAN1_RX0_IRQn);
-  /* TIM4_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(TIM4_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(TIM4_IRQn);
-  /* DMA1_Channel1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+  /* USART1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* DMA1_Channel4_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel4_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel4_IRQn);
   /* DMA1_Channel5_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);
+  /* TIM4_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(TIM4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(TIM4_IRQn);
+  /* TIM5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(TIM5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(TIM5_IRQn);
+  /* DMA1_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 }
 
 /* USER CODE BEGIN 4 */
@@ -310,24 +338,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   }
   
   if(htim5.Instance == htim->Instance)
-  {
-    if(UsartType.RX_Flag)
+  { 
+    gTIM5Cnt++;
+    if(gTIM5Cnt > 5)
     {
-      UsartType.RX_Flag = 0;
-      if(0x53 == *(UsartType.RX_pData) && 0x53 == *(UsartType.RX_pData + 1))
-      {
-        if(0xA0 == (*(UsartType.RX_pData + 2) && 0xA0))
-        {
-          
-        }
-        else
-        {
-        
-        }
-      }
+      gTIM5Cnt = 0;
+      gTIM5CntUpFlag = 1;
+    } 
+    gTIM5SendCnt ++;
+    if(gTIM5SendCnt > 1000)
+    {
+      gTIM5SendCntUpFlag = 1;
+      gTIM5SendCnt = 0;
     }
-    
-    
     
   }
 }

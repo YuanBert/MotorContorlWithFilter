@@ -91,6 +91,40 @@ struct sUsartReciveType
 ** AUTHOR: Bert.Zhang
 ********************************************************************************
 */
+struct sProtocolCmd
+{
+  uint8_t       RequestCmdCode;
+  uint8_t       RequestParam;
+  uint8_t       Requestdata0;
+  uint8_t       Requestdata1;
+  uint8_t       Requestdata2;
+  
+  
+  uint8_t       HandingFlag;
+  uint8_t       AckCmdCode;
+  uint8_t       AckCode;
+  
+  uint8_t       ReciveOrSendFlag;           //接收或者发送标志位  
+                                            // 0：空闲    1：接收    2：发送
+  uint8_t       RevRequestFlag;               //接受Reqquest命令完成
+  uint8_t       RevAckCmdFlag;
+  uint8_t       RevEchoFlag;
+  uint8_t       SendTimesCnt;               //发送次数计数
+  uint8_t       ProErrorCode;               //错误代码
+};
+/*******************************************************************************
+** struct: sRequestCmd
+**
+** DESCRIPTION:
+**  --
+**
+** CREATED: 2017/12/5, by Bert
+**
+** FILE: BSP_Protocol.h
+**
+** AUTHOR: Bert.Zhang
+********************************************************************************
+*/
 struct sRequestCmd
 {
   uint8_t       RequestCmdCode;
@@ -98,20 +132,9 @@ struct sRequestCmd
   uint8_t       Requestdata0;
   uint8_t       Requestdata1;
   uint8_t       Requestdata2;
-
-  uint8_t       AckCmdCode;
-  uint8_t       AckCode;
-  
-  uint8_t       ReciveOrSendFlag;           //接收或者发送标志位  
-                                            // 0：空闲    1：接收    2：发送
-  uint8_t       RevRequestFlag;               //接受Reqquest命令完成
-  uint8_t       RevAckCmd;
-  uint8_t       SendTimesCnt;               //发送次数计数
-  uint8_t       ProErrorCode;               //错误代码
 };
-   
 
-typedef struct sRequestCmd          REQCMD, * pREQCMD;
+typedef struct sProtocolCmd          PROTOCOLCMD, * pPROTOCOLCMD;
 typedef struct sUsartReciveType     USARTRECIVETYPE,    * pUSARTRECIVETYPE;
 
 typedef enum 
@@ -122,11 +145,15 @@ typedef enum
   BSP_TIMEOUT  = 0x03U
 }BSP_StatusTypeDef;
 
-BSP_StatusTypeDef BSP_SendRequestCmd(pREQCMD pRequestCmd);
-BSP_StatusTypeDef BSP_AckRequestCmd(pREQCMD pRequestCmd);
-BSP_StatusTypeDef BSP_SendAckCmd(pREQCMD pAckCmd);
+BSP_StatusTypeDef BSP_ProtocolInit(void);
+BSP_StatusTypeDef BSP_SendData(uint8_t *pData, uint16_t size,uint32_t Timeout);
+BSP_StatusTypeDef BSP_SendRequestCmd(pPROTOCOLCMD pRequestCmd);
+BSP_StatusTypeDef BSP_AckRequestCmd(pPROTOCOLCMD pRequestCmd);
+BSP_StatusTypeDef BSP_SendAckCmd(uint8_t AckCmd,uint8_t AckCode);
 void BSP_CheckRequestCmd(void);
-
+void BSP_HandingCmdWithTestVersion(void);
+void BSP_HandingUartDataWithTestVersion(void);
+void BSP_TrySend5TimesCmd(void);
    
 #ifdef __cplusplus
 }
