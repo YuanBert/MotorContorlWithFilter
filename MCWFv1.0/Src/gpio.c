@@ -85,6 +85,12 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOB, MotorENACtrl_Pin|MotorFRCtrl_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PtPin */
+  GPIO_InitStruct.Pin = GentleSensor_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GentleSensor_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = MotorBRKCtrl_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

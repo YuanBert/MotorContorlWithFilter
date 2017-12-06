@@ -79,7 +79,7 @@ BSP_StatusTypeDef BSP_ProtocolInit(void)
 BSP_StatusTypeDef BSP_SendData(uint8_t *pData, uint16_t size,uint32_t Timeout)
 {
   BSP_StatusTypeDef state = BSP_OK;
-  state = (BSP_StatusTypeDef)HAL_UART_Transmit_IT(&huart1,pData,size);
+  state = (BSP_StatusTypeDef)HAL_UART_Transmit_DMA(&huart1,pData,size);
   return state;
 }
   
@@ -263,7 +263,6 @@ void BSP_TrySend5TimesCmd(void)
         gProtocolCmd.SendTimesCnt++;
       }
     }
-    
   }
 }
 /**

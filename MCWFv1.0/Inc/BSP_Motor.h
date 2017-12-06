@@ -87,6 +87,7 @@
      uint8_t     HorFilterCnt;
      uint8_t     Motor_Error;
      uint8_t     EncounteredFlag;           //Óö×è±ê¼ÇÎ»
+     uint8_t     GentleSensorFlag;
    }MOTORMACHINE,*pMOTORMACHINE;
    
 

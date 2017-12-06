@@ -111,6 +111,7 @@ struct sProtocolCmd
   uint8_t       RevEchoFlag;
   uint8_t       SendTimesCnt;               //发送次数计数
   uint8_t       ProErrorCode;               //错误代码
+  uint8_t       SendingFlag;
 };
 /*******************************************************************************
 ** struct: sRequestCmd

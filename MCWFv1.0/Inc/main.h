@@ -59,6 +59,8 @@
 
 #define ISampleChanle_Pin GPIO_PIN_1
 #define ISampleChanle_GPIO_Port GPIOA
+#define GentleSensor_Pin GPIO_PIN_4
+#define GentleSensor_GPIO_Port GPIOC
 #define MotorBRKCtrl_Pin GPIO_PIN_5
 #define MotorBRKCtrl_GPIO_Port GPIOC
 #define MotorENACtrl_Pin GPIO_PIN_0
