@@ -118,6 +118,7 @@ void BSP_Running_Door(void)
     return ;
   }
   
+  
   BSP_Motor_Running(gMotorMachine.RunDir);
 }
 

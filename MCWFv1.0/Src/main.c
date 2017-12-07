@@ -149,7 +149,7 @@ int main(void)
   BSP_ProtocolInit();
   HAL_UART_Receive_DMA(&huart1,UsartType.RX_pData,BSP_RX_LEN);
   __HAL_UART_ENABLE_IT(&huart1,UART_IT_IDLE);   //使能串口空闲中断
-
+  BSP_Running_Door();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -159,18 +159,25 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-    if(1 == gMotorMachine.StartFlag)
-    {
-      BSP_Running_Door();
-      gMotorMachine.StartFlag = 0;
-    }
+//    if(1 == gMotorMachine.StartFlag)
+//    {
+//      BSP_Running_Door();
+//      gMotorMachine.StartFlag = 0;
+//    }
 
     
     BSP_HandingCmdWithTestVersion();
     
-    if(gGentleSensorFlag && 0 == gProtocolCmd.ReciveOrSendFlag)
+    if(gGentleSensorFlag)
     {
+      
+      gProtocolCmd.RequestCmdCode = 0xC1;
+      gProtocolCmd.RequestParam = 0x01;
+      gProtocolCmd.Requestdata0 = 0x00;
+      gProtocolCmd.Requestdata1 = 0x00;
+      gProtocolCmd.Requestdata2 = 0x00;
       BSP_SendRequestCmd(&gProtocolCmd);
+      gGentleSensorFlag = 0;
     }
         
     if(gTIM5CntUpFlag)
@@ -183,6 +190,7 @@ int main(void)
     if(gTIM5SendCntUpFlag)
     {
       BSP_TrySend5TimesCmd();
+      gTIM5SendCntUpFlag = 0;
     }
   }
   /* USER CODE END 3 */
@@ -290,24 +298,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   {
     gVerCurrentReadVal = HAL_GPIO_ReadPin(VerRasterInput_GPIO_Port,VerRasterInput_Pin);
     gHorCurrentReadVal = HAL_GPIO_ReadPin(HorRasterInput_GPIO_Port,HorRasterInput_Pin);
-    gGentleSensorVal   = HAL_GPIO_ReadPin(GentleSensor_GPIO_Port,GentleSensor_Pin);
-    
-    if(0 == gGentleSensorVal && 0 == gGentleSensorLastVal)
-    {
-      gGentleSensorCnt ++;
-      if(gGentleSensorCnt > 5 && 0 == gGentleSensorFlag)
-      {
-        gGentleSensorFlag = 1;
-        gGentleSensorCnt = 0;
-        gMotorMachine.GentleSensorFlag = 1;
-      }
-    }
-    else
-    {
-      gMotorMachine.GentleSensorFlag = 0;
-      gGentleSensorFlag = 0;
-      gGentleSensorCnt = 0;
-    }
     
     if(1 == gVerCurrentReadVal && 1 == gVerLastReadVal)
     {
@@ -354,7 +344,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     
     gVerLastReadVal = gVerCurrentReadVal;
     gHorLastReadVal = gHorCurrentReadVal;
-    gGentleSensorLastVal = gGentleSensorVal;
+    
       
     gTIM4Cnt++;
     if(gTIM4Cnt > 8000)
@@ -367,14 +357,39 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   
   if(htim5.Instance == htim->Instance)
   { 
+    
+    gGentleSensorVal   = HAL_GPIO_ReadPin(GentleSensor_GPIO_Port,GentleSensor_Pin);
+    
+    if(0 == gGentleSensorVal && 0 == gGentleSensorLastVal)
+    {
+      if(0 == gMotorMachine.GentleSensorFlag)
+      {
+        gGentleSensorCnt ++;
+        if(gGentleSensorCnt > 5 && 0 == gGentleSensorFlag)
+        {
+          gGentleSensorFlag = 1;
+          gGentleSensorCnt = 0;
+          gMotorMachine.GentleSensorFlag = 1;
+        }
+      }
+    }
+    else
+    {
+      gMotorMachine.GentleSensorFlag = 0;
+      gGentleSensorFlag = 0;
+      gGentleSensorCnt = 0;
+    }
+    gGentleSensorLastVal = gGentleSensorVal;
+    
     gTIM5Cnt++;
     if(gTIM5Cnt > 5)
     {
       gTIM5Cnt = 0;
       gTIM5CntUpFlag = 1;
     } 
+    
     gTIM5SendCnt ++;
-    if(gTIM5SendCnt > 1000)
+    if(gTIM5SendCnt > 500)
     {
       gTIM5SendCntUpFlag = 1;
       gTIM5SendCnt = 0;

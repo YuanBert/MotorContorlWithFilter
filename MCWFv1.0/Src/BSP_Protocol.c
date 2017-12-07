@@ -60,6 +60,7 @@ static uint8_t CmdBuffer[10];
 /* USER CODE END 0 */
 extern PROTOCOLCMD      gProtocolCmd;
 extern UART_HandleTypeDef huart1;
+extern MOTORMACHINE gMotorMachine;
 //UART_HandleTypeDef huart2;
 //UART_HandleTypeDef huart3;
 extern DMA_HandleTypeDef hdma_usart1_rx;
@@ -105,7 +106,7 @@ BSP_StatusTypeDef BSP_SendRequestCmd(pPROTOCOLCMD pRequestCmd)
     BSP_StatusTypeDef state = BSP_OK;
     gProtocolCmd.HandingFlag = 1;
     
-    if(gProtocolCmd.ReciveOrSendFlag)
+    if(0==gProtocolCmd.ReciveOrSendFlag)
     {
       
       CmdBuffer[2] = gProtocolCmd.RequestCmdCode;
@@ -120,12 +121,9 @@ BSP_StatusTypeDef BSP_SendRequestCmd(pPROTOCOLCMD pRequestCmd)
       
     }
     
-    state = BSP_SendData(CmdBuffer,10,0xFFFF);
-    if(BSP_OK == state)
-    {
-        gProtocolCmd.ReciveOrSendFlag = 1;
-        gProtocolCmd.SendTimesCnt++;
-    }
+    //state = BSP_SendData(CmdBuffer,10,0xFFFF);
+    gProtocolCmd.ReciveOrSendFlag = 1;
+    gProtocolCmd.RevEchoFlag = 0;
     
     return state;
 }
@@ -179,7 +177,12 @@ void BSP_HandingCmdWithTestVersion(void)
     switch(gProtocolCmd.RequestCmdCode & 0xF0 )
     {
     case 0xC0:BSP_SendAckCmd(0xAC,0x01);break;
-    case 0xD0:BSP_Running_Door();BSP_SendAckCmd(0xAD,0x01);break;
+    case 0xD0:BSP_SendAckCmd(0xAD,0x01);
+              if(1 == gMotorMachine.GentleSensorFlag)
+                {
+                  BSP_Running_Door();
+                }
+              break;
     case 0xE0:BSP_SendAckCmd(0xAE,0x01);break;
     case 0xB0:BSP_SendAckCmd(0xAB,0x01);break;
     case 0xF0:BSP_SendAckCmd(0xAF,0x01);break;
@@ -239,20 +242,22 @@ void BSP_HandingUartDataWithTestVersion(void)
 
 void BSP_TrySend5TimesCmd(void)
 {
-  if(gProtocolCmd.ReciveOrSendFlag)
+  if(1 == gProtocolCmd.ReciveOrSendFlag)
   {
-    if(gProtocolCmd.RevEchoFlag)
+    if(1 == gProtocolCmd.RevEchoFlag)
     {
         //检测相关信息
+      gProtocolCmd.HandingFlag = 0;
       gProtocolCmd.ReciveOrSendFlag = 0;
       gProtocolCmd.SendTimesCnt = 0;
       gProtocolCmd.RevEchoFlag = 0;
     }
     else
     {
-      if(gProtocolCmd.SendTimesCnt > 5)
+      if(gProtocolCmd.SendTimesCnt > 4)
       {
         //超时错误
+        gProtocolCmd.HandingFlag = 0;
         gProtocolCmd.ReciveOrSendFlag = 0;
         gProtocolCmd.SendTimesCnt = 0;
         gProtocolCmd.RevEchoFlag = 0;
