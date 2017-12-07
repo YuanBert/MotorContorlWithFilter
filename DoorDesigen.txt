@@ -23,6 +23,15 @@
 2.数据结构设计
 		
 		typedef struct{
+			uint8_t		GpioCurrentReadVal;
+			uint8_t		GpioLastReadVal;
+			uint8_t		GpioFilterCnt;
+			uint8_t		GpioStatusVal;		
+		}GPIOSTATUSDETECTION;
+		
+		
+		
+		typedef struct{
 			uint8_t 	VerticalRasterState;			//垂直状态标记位
 			uint8_t		HorizontalRasterState;			//水平状态标记位
 			uint8_t		RunningState;					//运行状态  0-停止 1-运行
@@ -30,7 +39,8 @@
 			uint16_t	RunningSpeed;					//开闸速度
 			uint8_t 	VStartFlag;						//垂直启动标记位（扩展）
 			uint8_t     HStartFlag;						//水平启动标记位（扩展）
-			uint8_t     FilterCnt;						//滤波计数器	
+			uint8_t     FilterCnt;						//滤波计数器
+			uint8_t		EncounteredFlag;				//遇阻标记位
 			uint8_t		GentleSensorFlag;				//地感信号Flag
 		}MOTORMACHINE,*pMOTORMACHINE;
 		
