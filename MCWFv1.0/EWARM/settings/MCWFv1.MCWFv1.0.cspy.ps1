@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.general.xcl" --backend -f "E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "E:\Users\bertz\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.general.xcl" --backend -f "E:\Users\bertz\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.driver.xcl" 
 }
 else
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.general.xcl" --debug_file=$debugfile --backend -f "E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "E:\Users\bertz\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.general.xcl" --debug_file=$debugfile --backend -f "E:\Users\bertz\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.driver.xcl" 
 }

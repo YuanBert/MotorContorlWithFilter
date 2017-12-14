@@ -149,7 +149,7 @@ int main(void)
   BSP_ProtocolInit();
   HAL_UART_Receive_DMA(&huart1,UsartType.RX_pData,BSP_RX_LEN);
   __HAL_UART_ENABLE_IT(&huart1,UART_IT_IDLE);   //使能串口空闲中断
-  BSP_Running_Door();
+  //BSP_Running_Door();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -159,11 +159,11 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-//    if(1 == gMotorMachine.StartFlag)
-//    {
-//      BSP_Running_Door();
-//      gMotorMachine.StartFlag = 0;
-//    }
+    if(1 == gMotorMachine.StartFlag)
+    {
+      BSP_Running_Door();
+      gMotorMachine.StartFlag = 0;
+    }
 
     
     BSP_HandingCmdWithTestVersion();
@@ -172,10 +172,10 @@ int main(void)
     {
       
       gProtocolCmd.RequestCmdCode = 0xC1;
-      gProtocolCmd.RequestParam = 0x01;
-      gProtocolCmd.Requestdata0 = 0x00;
-      gProtocolCmd.Requestdata1 = 0x00;
-      gProtocolCmd.Requestdata2 = 0x00;
+      gProtocolCmd.RequestParam   = 0x01;
+      gProtocolCmd.Requestdata0   = 0x00;
+      gProtocolCmd.Requestdata1   = 0x00;
+      gProtocolCmd.Requestdata2   = 0x00;
       BSP_SendRequestCmd(&gProtocolCmd);
       gGentleSensorFlag = 0;
     }
@@ -214,7 +214,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL6;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
@@ -229,14 +229,14 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
   }
 
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC|RCC_PERIPHCLK_USB;
-  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV4;
-  PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_PLL;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
+  PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_PLL_DIV1_5;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
@@ -294,6 +294,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* NOTE : This function Should not be modified, when the callback is needed,
             the __HAL_TIM_PeriodElapsedCallback could be implemented in the user file
    */
+  
+  /* 0.1ms */
   if(htim4.Instance == htim->Instance)
   {
     gVerCurrentReadVal = HAL_GPIO_ReadPin(VerRasterInput_GPIO_Port,VerRasterInput_Pin);
@@ -302,7 +304,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if(1 == gVerCurrentReadVal && 1 == gVerLastReadVal)
     {
       gMotorMachine.VerFilterCnt ++;
-      if(gMotorMachine.VerFilterCnt > 5)       //高电平信号持续时间大于10MS,
+      if(gMotorMachine.VerFilterCnt > 20)       //高电平信号持续时间大于2MS,
       {
         gMotorMachine.VerticalRasterState = 1;  //到位停机
         gMotorMachine.VerFilterCnt = 0;
@@ -323,7 +325,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if(1 == gHorCurrentReadVal && 1 == gHorLastReadVal)
     {
       gMotorMachine.HorFilterCnt++;
-      if(gMotorMachine.HorFilterCnt > 5)
+      if(gMotorMachine.HorFilterCnt > 20)
       {
         gMotorMachine.HorizontalRasterState = 1;
         gMotorMachine.HorFilterCnt = 0;
@@ -347,7 +349,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     
       
     gTIM4Cnt++;
-    if(gTIM4Cnt > 8000)
+    
+    if(gTIM4Cnt > 60000)
     {
       gTIM4Cnt = 0;
       gTIM4CntUpFlag = 1;
@@ -365,7 +368,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
       if(0 == gMotorMachine.GentleSensorFlag)
       {
         gGentleSensorCnt ++;
-        if(gGentleSensorCnt > 5 && 0 == gGentleSensorFlag)
+        if(gGentleSensorCnt > 50 && 0 == gGentleSensorFlag)
         {
           gGentleSensorFlag = 1;
           gGentleSensorCnt = 0;
@@ -382,14 +385,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     gGentleSensorLastVal = gGentleSensorVal;
     
     gTIM5Cnt++;
-    if(gTIM5Cnt > 5)
+    if(gTIM5Cnt > 50)
     {
       gTIM5Cnt = 0;
       gTIM5CntUpFlag = 1;
     } 
     
     gTIM5SendCnt ++;
-    if(gTIM5SendCnt > 500)
+    if(gTIM5SendCnt > 5000)
     {
       gTIM5SendCntUpFlag = 1;
       gTIM5SendCnt = 0;

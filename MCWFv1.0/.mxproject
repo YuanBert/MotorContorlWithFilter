@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=E:/Users/17657/Documents/GitHub/MotorContorlWithFilter/MCWFv1.0/Inc
+HeaderPath=E:/Users/bertz/Documents/GitHub/MotorContorlWithFilter/MCWFv1.0/Inc
 HeaderFiles=gpio.h;tim.h;usb_device.h;usbd_conf.h;usbd_desc.h;usbd_cdc_if.h;stm32f1xx_it.h;stm32f1xx_hal_conf.h;main.h;adc.h;dma.h;usart.h;
-SourcePath=E:/Users/17657/Documents/GitHub/MotorContorlWithFilter/MCWFv1.0/Src
+SourcePath=E:/Users/bertz/Documents/GitHub/MotorContorlWithFilter/MCWFv1.0/Src
 SourceFiles=gpio.c;tim.c;usb_device.c;usbd_conf.c;usbd_desc.c;usbd_cdc_if.c;stm32f1xx_it.c;stm32f1xx_hal_msp.c;main.c;adc.c;dma.c;usart.c;
 
 [PreviousLibFiles]

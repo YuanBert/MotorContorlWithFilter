@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.general.xcl" --backend -f "E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "E:\Users\bertz\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.general.xcl" --backend -f "E:\Users\bertz\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.general.xcl" "--debug_file=%~1" --backend -f "E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "E:\Users\bertz\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.general.xcl" "--debug_file=%~1" --backend -f "E:\Users\bertz\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\EWARM\settings\MCWFv1.MCWFv1.0.driver.xcl" 
 
 @echo off 
 :end

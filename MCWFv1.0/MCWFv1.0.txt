@@ -1,6 +1,6 @@
 Configuration	MCWFv1.0
 STM32CubeMX 	4.23.0
-Date	12/06/2017
+Date	12/13/2017
 MCU	STM32F103RCTx
 
 
@@ -45,7 +45,7 @@ SOFTWARE PROJECT
 
 Project Settings : 
 Project Name : MCWFv1.0
-Project Folder : E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0
+Project Folder : E:\Users\bertz\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0
 Toolchain / IDE : EWARM
 Firmware Package Name and Version : STM32Cube FW_F1 V1.6.0
 

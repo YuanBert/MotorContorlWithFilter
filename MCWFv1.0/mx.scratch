@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
-<ProjectName>E:\Users\17657\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\\MCWFv1.0</ProjectName>
+<ProjectName>E:\Users\bertz\Documents\GitHub\MotorContorlWithFilter\MCWFv1.0\\MCWFv1.0</ProjectName>
 <CMSIS>..\Drivers\CMSIS</CMSIS>
-<HAL_Driver>D:\Lib\STM32Cube_FW_F1_V1.6.0\Drivers\CMSIS</HAL_Driver>
+<HAL_Driver>C:\Users\bertz\STM32Cube\Repository\STM32Cube_FW_F1_V1.6.0\Drivers\CMSIS</HAL_Driver>
 
 <Toolchain>EWARM</Toolchain>
 	<Toolversion>0</Toolversion>
@@ -28,7 +28,7 @@
     <heapSize>0x200</heapSize>
     <stackSize>0x400</stackSize>
     
-    	<cpuclock>48</cpuclock>
+    	<cpuclock>72</cpuclock>
     	<board>custom</board>
 			
     <usedDebug>true</usedDebug>
